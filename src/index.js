@@ -18,28 +18,18 @@ function Header() {
 }
 
 function Menu() {
+  const foods = data;
+  const numFoods = foods.length;
   return (
     <div className="menu">
       <h2>Our Menu </h2>
-      <ul className="foods">
-        {data.map((food) => (
-          <Foods foodObj={food} key={food.nama} />
-        ))}
-      </ul>
-      {/* <Foods
-        nama="Nasi Goreng"
-        deskripsi="Nasi yang digoreng dengan bumbu rempah khas Indonesia"
-        harga={25000}
-        foto="food/nasi-goreng.jpg"
-        stok={Math.random() >= 0.5 ? true : false}
-      />
-      <Foods
-        nama="Sate Ayam"
-        deskripsi="Daging yang dibakar pakai bumbu kacang "
-        harga={29000}
-        foto="food/sate-ayam.jpg"
-        stok={Math.random() >= 0.5 ? true : false}
-      /> */}
+      {numFoods > 0 && (
+        <ul className="foods">
+          {data.map((food) => (
+            <Foods foodObj={food} key={food.nama} />
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -66,19 +56,20 @@ function Footer() {
   const hour = new Date().getHours();
   const jamBuka = 10;
   const jamTutup = 22;
+  const isOpen = hour >= jamBuka && hour <= jamTutup;
 
-  if (hour < jamBuka || hour > jamTutup) {
-    alert("Sudah Tutup");
-  } else {
-    alert("masih buka ");
-  }
   return (
-    <div className="footer">
-      <footer>
-        {" "}
-        <p>{new Date().getFullYear()} Yuk Makan </p>
-      </footer>
-    </div>
+    <footer className="footer">
+      {isOpen && (
+        <div className="order">
+          <p>
+            {new Date().getFullYear()} Yuk Makan | {jamBuka}
+            jam tutup {jamTutup}
+          </p>
+          <button className="btn">Order</button>
+        </div>
+      )}
+    </footer>
   );
 }
 
