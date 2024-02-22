@@ -23,12 +23,14 @@ function Menu() {
   return (
     <div className="menu">
       <h2>Our Menu </h2>
-      {numFoods > 0 && (
+      {numFoods > 0 ? (
         <ul className="foods">
           {data.map((food) => (
             <Foods foodObj={food} key={food.nama} />
           ))}
         </ul>
+      ) : (
+        <p>Stock habis, datang lagi besok </p>
       )}
     </div>
   );
@@ -60,14 +62,19 @@ function Footer() {
 
   return (
     <footer className="footer">
-      {isOpen && (
+      {isOpen ? (
         <div className="order">
           <p>
-            {new Date().getFullYear()} Yuk Makan | {jamBuka}
-            jam tutup {jamTutup}
+            {new Date().getFullYear()} Yuk Makan | jam buka {jamBuka} | jam
+            tutup {jamTutup}
           </p>
           <button className="btn">Order</button>
         </div>
+      ) : (
+        <p>
+          Opps sorry we are closed please comeback @ {jamBuka}.00 - {jamTutup}
+          .00
+        </p>
       )}
     </footer>
   );
