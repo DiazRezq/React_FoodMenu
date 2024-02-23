@@ -37,18 +37,14 @@ function Menu() {
 }
 
 function Foods(props) {
+  const { nama, deskripsi, harga, foto, stok } = props.foodObj;
   return (
     <li className="food">
-      <img
-        src={props.foodObj.foto}
-        alt={props.foodObj.nama}
-        width={100}
-        height={70}
-      />
+      <img src={foto} alt={nama} width={100} height={70} />
       <div>
-        <h2>{props.foodObj.nama}</h2>
-        <p>{props.foodObj.deskripsi}</p>
-        <span>{props.foodObj.harga}</span>
+        <h2>{nama}</h2>
+        <p>{deskripsi}</p>
+        <span>{harga}</span>
       </div>
     </li>
   );
@@ -56,26 +52,39 @@ function Foods(props) {
 
 function Footer() {
   const hour = new Date().getHours();
-  const jamBuka = 10;
+  const jamBuka = 8;
   const jamTutup = 22;
   const isOpen = hour >= jamBuka && hour <= jamTutup;
 
+  if (isOpen) {
+    return <FooterOpenHour jamBuka={jamBuka} jamTutup={jamTutup} />;
+  } else {
+    return <FooterClosehour jamBuka={jamBuka} jamTutup={jamTutup} />;
+  }
+}
+
+function FooterClosehour({jamBuka,jamTutup}) {
+  return (
+    <footer>
+      <p>
+        Opps sorry we are closed please comeback @ {jamBuka}.00 -{" "}
+        {jamTutup}
+        .00
+      </p>
+    </footer>
+  );
+}
+
+function FooterOpenHour({jamBuka,jamTutup}) {
   return (
     <footer className="footer">
-      {isOpen ? (
-        <div className="order">
-          <p>
-            {new Date().getFullYear()} Yuk Makan | jam buka {jamBuka} | jam
-            tutup {jamTutup}
-          </p>
-          <button className="btn">Order</button>
-        </div>
-      ) : (
+      <div className="order">
         <p>
-          Opps sorry we are closed please comeback @ {jamBuka}.00 - {jamTutup}
-          .00
+          {new Date().getFullYear()} Yuk Makan | jam buka {jamBuka} | jam
+          tutup {jamTutup}
         </p>
-      )}
+        <button className="btn">Order</button>
+      </div>
     </footer>
   );
 }
