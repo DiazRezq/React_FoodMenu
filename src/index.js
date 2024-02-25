@@ -24,11 +24,17 @@ function Menu() {
     <div className="menu">
       <h2>Our Menu </h2>
       {numFoods > 0 ? (
-        <ul className="foods">
-          {data.map((food) => (
-            <Foods foodObj={food} key={food.nama} />
-          ))}
-        </ul>
+        <>
+          <p>
+            Yuk makan menyajikan makanan Traditional, Asia dan Western. dengan
+            harga terjangkau, bahan berkualitas dengan kualitas internasional
+          </p>
+          <ul className="foods">
+            {data.map((food) => (
+              <Foods foodObj={food} key={food.nama} />
+            ))}
+          </ul>
+        </>
       ) : (
         <p>Stock habis, datang lagi besok </p>
       )}
@@ -39,12 +45,12 @@ function Menu() {
 function Foods(props) {
   const { nama, deskripsi, harga, foto, stok } = props.foodObj;
   return (
-    <li className="food">
+    <li className={`food ${!stok ? "sold-out" : ""}`}>
       <img src={foto} alt={nama} width={100} height={70} />
       <div>
         <h2>{nama}</h2>
         <p>{deskripsi}</p>
-        <span>{harga}</span>
+        <span>{stok ? harga : "sold-out"}</span>
       </div>
     </li>
   );
@@ -63,25 +69,24 @@ function Footer() {
   }
 }
 
-function FooterClosehour({jamBuka,jamTutup}) {
+function FooterClosehour({ jamBuka, jamTutup }) {
   return (
     <footer>
       <p>
-        Opps sorry we are closed please comeback @ {jamBuka}.00 -{" "}
-        {jamTutup}
+        Opps sorry we are closed please comeback @ {jamBuka}.00 - {jamTutup}
         .00
       </p>
     </footer>
   );
 }
 
-function FooterOpenHour({jamBuka,jamTutup}) {
+function FooterOpenHour({ jamBuka, jamTutup }) {
   return (
     <footer className="footer">
       <div className="order">
         <p>
-          {new Date().getFullYear()} Yuk Makan | jam buka {jamBuka} | jam
-          tutup {jamTutup}
+          {new Date().getFullYear()} Yuk Makan | jam buka {jamBuka} | jam tutup{" "}
+          {jamTutup}
         </p>
         <button className="btn">Order</button>
       </div>
